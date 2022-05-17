@@ -1,0 +1,20 @@
+server:
+  port: 8444
+
+spring:
+  main:
+    banner-mode: off
+  data:
+    mongodb:
+      port: 27017
+      host: localhost
+  jackson:
+    default-property-inclusion: non_null
+    deserialization:
+      fail-on-unknown-properties: false
+
+service:
+  data-file: data.txt
+  delay:
+    enabled: true
+    duration: 1000ms

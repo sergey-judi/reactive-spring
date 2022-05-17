@@ -1,0 +1,13 @@
+version: "3.9"
+
+services:
+  mongo:
+    container_name: reactive-mongo
+    image: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodata:/data/db
+
+volumes:
+  mongodata:
