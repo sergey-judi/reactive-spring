@@ -23,8 +23,8 @@ public class QuoteBlockingController {
   }
 
   @GetMapping("/quotes/paged")
-  public List<Quote> getAll(@RequestParam(name = "page") int page,
-                            @RequestParam(name = "size") int size) {
+  public List<Quote> getAll(@RequestParam("page") int page,
+                            @RequestParam("size") int size) {
     return quoteService.getAllByPage(page, size);
   }
 

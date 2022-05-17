@@ -22,8 +22,8 @@ public class QuoteReactiveController {
   }
 
   @GetMapping("/quotes/paged")
-  public Flux<Quote> getAll(@RequestParam(name = "page") int page,
-                            @RequestParam(name = "size") int size) {
+  public Flux<Quote> getAll(@RequestParam("page") int page,
+                            @RequestParam("size") int size) {
     return quoteService.getAllByPage(page, size);
   }
 
