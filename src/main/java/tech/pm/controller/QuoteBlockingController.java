@@ -11,12 +11,17 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import tech.pm.controller.dto.QuoteDto;
+import tech.pm.controller.dto.QuoteDto.OnCreate;
 import tech.pm.converter.QuoteConverter;
 import tech.pm.service.blocking.QuoteBlockingService;
 
+import javax.validation.groups.Default;
 import java.util.List;
+
+import static org.springframework.http.HttpStatus.CREATED;
 
 @Slf4j
 @RestController
@@ -59,7 +64,8 @@ public class QuoteBlockingController {
   }
 
   @PostMapping
-  public QuoteDto create(@Validated @RequestBody QuoteDto quoteDto) {
+  @ResponseStatus(CREATED)
+  public QuoteDto create(@Validated({Default.class, OnCreate.class}) @RequestBody QuoteDto quoteDto) {
     log.info("Creating quote [{}]", quoteDto);
     QuoteDto created = quoteConverter.toDto(
         quoteService.create(quoteConverter.fromDto(quoteDto)));

@@ -18,16 +18,18 @@ import tech.pm.controller.dto.QuoteDto;
 import tech.pm.converter.QuoteConverter;
 import tech.pm.service.reactive.QuoteReactiveService;
 
+import javax.validation.groups.Default;
+
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/reactive")
+@RequestMapping("/reactive/quotes")
 public class QuoteReactiveController {
 
   private final QuoteReactiveService quoteService;
   private final QuoteConverter quoteConverter;
 
-  @GetMapping("/quotes")
+  @GetMapping
   public Flux<QuoteDto> getAll() {
     log.info("Retrieving all quotes");
     return quoteService.getAll()
@@ -35,7 +37,7 @@ public class QuoteReactiveController {
         .doOnComplete(() -> log.info("Successfully retrieved all quotes"));
   }
 
-  @GetMapping("/quotes/paged")
+  @GetMapping("/paged")
   public Flux<QuoteDto> getAll(@RequestParam("page") int page,
                                @RequestParam("size") int size) {
     log.info("Retrieving all quotes by page [{}] and size [{}]", page, size);
@@ -53,7 +55,7 @@ public class QuoteReactiveController {
   }
 
   @PostMapping
-  public Mono<QuoteDto> create(@Validated @RequestBody QuoteDto quoteDto) {
+  public Mono<QuoteDto> create(@Validated({Default.class, QuoteDto.OnCreate.class}) @RequestBody QuoteDto quoteDto) {
     log.info("Creating quote [{}]", quoteDto);
     return quoteService.create(quoteConverter.fromDto(quoteDto))
         .map(quoteConverter::toDto)
