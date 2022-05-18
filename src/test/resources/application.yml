@@ -1,0 +1,11 @@
+spring:
+  data:
+    mongodb:
+      port: 27017
+      host: localhost
+
+service:
+  data-file: data.txt
+  delay:
+    enabled: false
+    duration: 1000ms

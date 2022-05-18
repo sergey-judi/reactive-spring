@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import tech.pm.controller.dto.QuoteDto;
+import tech.pm.controller.dto.QuoteDto.OnCreate;
 import tech.pm.converter.QuoteConverter;
 import tech.pm.service.reactive.QuoteReactiveService;
 
@@ -55,7 +56,7 @@ public class QuoteReactiveController {
   }
 
   @PostMapping
-  public Mono<QuoteDto> create(@Validated({Default.class, QuoteDto.OnCreate.class}) @RequestBody QuoteDto quoteDto) {
+  public Mono<QuoteDto> create(@Validated({Default.class, OnCreate.class}) @RequestBody QuoteDto quoteDto) {
     log.info("Creating quote [{}]", quoteDto);
     return quoteService.create(quoteConverter.fromDto(quoteDto))
         .map(quoteConverter::toDto)
