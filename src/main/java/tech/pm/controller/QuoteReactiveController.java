@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -20,6 +21,8 @@ import tech.pm.converter.QuoteConverter;
 import tech.pm.service.reactive.QuoteReactiveService;
 
 import javax.validation.groups.Default;
+
+import static org.springframework.http.HttpStatus.CREATED;
 
 @Slf4j
 @RestController
@@ -56,6 +59,7 @@ public class QuoteReactiveController {
   }
 
   @PostMapping
+  @ResponseStatus(CREATED)
   public Mono<QuoteDto> create(@Validated({Default.class, OnCreate.class}) @RequestBody QuoteDto quoteDto) {
     log.info("Creating quote [{}]", quoteDto);
     return quoteService.create(quoteConverter.fromDto(quoteDto))
