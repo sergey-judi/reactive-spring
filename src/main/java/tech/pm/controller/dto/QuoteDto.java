@@ -1,10 +1,14 @@
 package tech.pm.controller.dto;
 
-import lombok.Value;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
 
-@Value
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class QuoteDto {
 
   @NotBlank(groups = OnCreate.class)

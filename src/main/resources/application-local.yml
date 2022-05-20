@@ -17,4 +17,4 @@ service:
   data-file: data.txt
   delay:
     enabled: true
-    duration: 1000ms
+    duration: 50ms

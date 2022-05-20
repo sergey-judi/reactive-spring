@@ -9,3 +9,8 @@ service:
   delay:
     enabled: false
     duration: 1000ms
+
+logging:
+  level:
+    tech.pm.controller: off
+    org.mongodb.driver: off

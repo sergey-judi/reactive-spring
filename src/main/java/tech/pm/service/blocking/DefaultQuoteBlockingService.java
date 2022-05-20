@@ -27,13 +27,13 @@ public class DefaultQuoteBlockingService implements QuoteBlockingService {
 
   @Override
   public List<Quote> getAll() {
-    delayIfNeeded();
+    delayIfNeeded(quoteRepository.count());
     return quoteRepository.findAll();
   }
 
   @Override
   public List<Quote> getAllByPage(int page, int size) {
-    delayIfNeeded();
+    delayIfNeeded((page + 1) * size);
     return quoteRepository.findAllByIdNotNullOrderByIdAsc(PageRequest.of(page, size));
   }
 
@@ -69,9 +69,9 @@ public class DefaultQuoteBlockingService implements QuoteBlockingService {
   }
 
   @SneakyThrows
-  public void delayIfNeeded() {
+  public void delayIfNeeded(long elements) {
     if (delayProperties.isEnabled()) {
-      Thread.sleep(delayProperties.getDuration().toMillis() * quoteRepository.count());
+      Thread.sleep(delayProperties.getDuration().toMillis() * elements);
     }
   }
 
