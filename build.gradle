@@ -65,3 +65,33 @@ idea {
     downloadSources = true
   }
 }
+
+task stage(dependsOn: ['bootJar'])
+
+tasks.stage.doLast() {
+  delete fileTree(dir: "build/distributions")
+  delete fileTree(dir: "build/assetCompile")
+  delete fileTree(dir: "build/distributions")
+  delete fileTree(dir: "build/libs", exclude: "*.jar") // delete everything except jar file inside build folder
+}
+
+jar { // Don't package test folders and files
+  exclude "test/**"
+  exclude "test/**/**"
+}
+
+build.mustRunAfter clean // First clean then build to avoid cache issues etc
+
+gradle.taskGraph.whenReady {
+  taskGraph ->
+    if (taskGraph.hasTask(stage)) { // Don't run test on heroku
+      test.enabled = false
+    }
+}
+
+bootJar { // Exclude test files when pack boot jar file
+  enabled = true
+  classifier = 'boot'
+  exclude "test/**"
+  exclude "test/**/**"
+}

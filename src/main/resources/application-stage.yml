@@ -1,0 +1,16 @@
+spring:
+  main:
+    banner-mode: off
+  data:
+    mongodb:
+      uri: ${MONGODB_URI}
+  jackson:
+    default-property-inclusion: non_null
+    deserialization:
+      fail-on-unknown-properties: false
+
+service:
+  data-file: data.txt
+  delay:
+    enabled: false
+    duration: 50ms
