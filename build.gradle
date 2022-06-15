@@ -22,6 +22,7 @@ repositories {
 ext {
   springBootVersion = '2.6.7'
   nettyVersion = '4.1.77.Final'
+  micrometerVersion = '1.9.0'
   log4jVersion = '1.7.35'
   lombokVersion = '1.18.22'
   testcontainersVersion = '1.16.3'
@@ -41,6 +42,8 @@ dependencies {
 
   implementation group: 'org.springframework.boot', name: 'spring-boot-starter-actuator'
   implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation'
+
+  implementation group: 'io.micrometer', name: 'micrometer-registry-prometheus', version: micrometerVersion
 
   implementation group: 'org.slf4j', name: 'slf4j-api', version: log4jVersion
 
